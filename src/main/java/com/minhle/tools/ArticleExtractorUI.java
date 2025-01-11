@@ -50,7 +50,8 @@ public class ArticleExtractorUI extends JFrame {
         }
 
         try {
-            String html = ArticleExtractor.extractArticle(url);
+            // String html = ArticleExtractor.extractArticle(url);
+            String html = ArticleExtractor.extractArticleText(url);
             articlePane.setText(html);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Failed to fetch article: " + e.getMessage());

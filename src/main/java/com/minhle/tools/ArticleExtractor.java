@@ -9,6 +9,27 @@ import java.io.IOException;
 
 public class ArticleExtractor {
 
+    public static String extractArticleText(String url) throws IOException {
+        // Connect to the URL and parse the HTML
+        Document document = Jsoup.connect(url).get();
+
+        // Use a selector to find the main article content
+        // This selector may vary depending on the website's structure
+        Elements articleElements = document.select("article, #main-content, .post-content, .entry-content");
+
+        // If no elements are found with the above selectors, try a more generic one
+        if (articleElements.isEmpty()) {
+            articleElements = document.select("body");
+        }
+
+        // Extract and return the text content of the first matching element
+        if (!articleElements.isEmpty()) {
+            Element articleElement = articleElements.first();
+            return articleElement.text();
+        }
+        return "Article text could not be extracted.";
+    }
+
     public static String extractArticle(String url) throws IOException {
         Document doc = Jsoup.connect(url).get();
         Element article = doc.select("article, .post, .entry").first();
